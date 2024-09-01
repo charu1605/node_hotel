@@ -1,0 +1,6 @@
+var fs=require('fs')
+var os=require('os')
+var user=os.userInfo()
+console.log(user)
+fs.appendFile("greeting.txt","hi "+user.username,function(){console.log("appended")})
+console.log(os)
