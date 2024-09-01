@@ -2,11 +2,13 @@ const express = require('express');
 const app = express();  // Store the function in app
 const db = require('./db'); // Exported db from db.js for connection between node and MongoDB
 
+
+require('dotenv').config()
 // const person = require('./models/persons');
 const menus=require('./models/menu')
 const bodyParser=require('body-parser') //convert datatype into required datatype
 app.use(bodyParser.json())
-
+const PORT=process.env.PORT||3000
 // Middleware to parse JSON bodies
 app.use(express.json()); // Allows Express to parse JSON in request bodies
 
@@ -105,7 +107,19 @@ app.post('/menu',async(req,res)=>{
 })
 
 
+app.get('/menu', async (req, res) => {
+  try {
+    const data = await menus.find();
+    console.log('Data fetched');
+    res.status(200).json(data);
+  } catch (err) {
+    console.error('Error fetching data:', err);
+    res.status(500).json({ error: 'Internal server error' });
+  }
+});
+
+
 const personr=require('./routes/person_route')
 app.use('/person',personr)
 // Start the server
-app.listen(3000, () => console.log("Port number 3000 is assigned"));
+app.listen(PORT, () => console.log("Port number 3000 is assigned"));

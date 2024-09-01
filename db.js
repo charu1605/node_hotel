@@ -1,9 +1,11 @@
 const mongoose = require('mongoose');
-const mongoURL = 'mongodb://localhost:27017/mydatabase'; // Replace 'mydatabase' with your database name
-
+require('dotenv').config()
+// local url
+// const mongoURL = 'mongodb://localhost:27017/mydatabase'; // Replace 'mydatabase' with your database name
+// global url
+const mongoURL = process.env.DB_URL
 // Setup MongoDB connection
 mongoose.connect(mongoURL, {
-  // The options are commented out since they are deprecated in Mongoose 6+
   // useNewUrlParser: true,
   // useUnifiedTopology: true,
 });
